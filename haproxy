@@ -1,0 +1,53 @@
+#!/bin/bash
+BIN_DIR="/etc/haproxy/sbin"
+BASE_DIR="/etc/haproxy"
+ARGV="$@"
+
+reload()
+{
+    echo "RELOAD HAPoxy SERVERS"
+#    $BIN_DIR/haproxy -f $BASE_DIR/haproxy.cfg -sf `cat $BASE_DIR/haproxy.pid`
+     $BIN_DIR/haproxy -f $BASE_DIR/haproxy.cfg  -p $BASE_DIR/haproxy.pid  -sf $(cat $BASE_DIR/haproxy.pid)
+}
+
+start()
+{
+    echo "START HAPoxy SERVERS"
+    $BIN_DIR/haproxy -f $BASE_DIR/haproxy.cfg
+}
+
+stop()
+{
+    echo "STOP HAPoxy Listen"
+    kill -TTOU $(cat $BASE_DIR/haproxy.pid)
+    echo "STOP HAPoxy process"
+    kill -USR1 $(cat $BASE_DIR/haproxy.pid)
+}
+case $ARGV in
+
+start)
+start
+ERROR=$?
+;;
+
+stop)
+stop
+ERROR=$?
+;;
+
+restart)
+stop
+start
+ERROR=$?
+;;
+
+reload)
+reload
+ERROR=$?
+;;
+
+*)
+echo "hactl.sh [start|restart|stop|reload]"
+esac
+
+exit $ERROR
