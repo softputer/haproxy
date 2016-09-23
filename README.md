@@ -1,5 +1,5 @@
 # Haproxy
-
+[![](https://images.microbadger.com/badges/image/softputer/haproxy.svg)]
 ### Supported Haproxy versions
 
 There are two dockerfiles in the repo:One is for haproxy 1.6.3 with haproxy files included in this repo; the other one makes it easy for you to build any version of haproxy as it downloads haproxy online. You can changed the haproxy version just by changing the ENV HAPROXY_VERSION to the your desired version.
